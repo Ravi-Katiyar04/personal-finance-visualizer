@@ -15,7 +15,7 @@ export default function MonthlyBarChart({ transactions }) {
   }, [transactions]);
 
   return (
-    <div className="p-4 bg-white rounded shadow">
+    <div className="p-4 my-6 bg-white rounded shadow">
       <h2 className="text-lg font-semibold mb-3">Monthly Expenses</h2>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart data={data}>

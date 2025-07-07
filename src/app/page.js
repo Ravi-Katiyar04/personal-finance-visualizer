@@ -9,6 +9,7 @@ import ExpensePieChart from '@/components/ExpensePieChart';
 import BudgetManager from '@/components/BudgetManager';
 import BudgetBarChart from '@/components/BudgetBarChart';
 import SpendingInsights from '@/components/SpendingInsights';
+import MonthlyBarChart from '@/components/MonthlyBarChart';
 import Layout from '@/components/Layout';
 
 export default function HomePage() {
@@ -30,6 +31,7 @@ export default function HomePage() {
   return (
     <Layout>
       <TransactionForm onAdd={handleAdd} transactions={transactions} />
+      <MonthlyBarChart transactions={transactions} />
       <DashboardSummary transactions={transactions} />
       <BudgetManager categories={categories} budgets={budgets} setBudgets={setBudgets} />
       <SpendingInsights transactions={transactions} budgets={budgets} />
