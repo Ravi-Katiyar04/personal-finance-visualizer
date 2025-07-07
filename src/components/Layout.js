@@ -9,7 +9,7 @@ export default function Layout({ children }) {
   const navLinks = [
     { label: 'Dashboard', href: '/' },
     { label: 'Reports', href: '/reports' },
-    { label: 'Settings', href: '/settings' },
+    { label: 'All Transection', href: '/table-view' },
   ];
 
   return (
