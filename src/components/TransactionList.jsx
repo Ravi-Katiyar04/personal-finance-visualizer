@@ -1,37 +1,4 @@
-// 'use client';
-// import { useEffect, useState } from 'react';
 
-// export default function TransactionList() {
-//   const [transactions, setTransactions] = useState([]);
-
-//   useEffect(() => {
-//     fetch('/api/transactions')
-//       .then((res) => res.json())
-//       .then((data) => setTransactions(data));
-//   }, []);
-
-//   return (
-//     <div className="p-4">
-//       <h2 className="text-xl font-semibold mb-2">Recent Transactions</h2>
-//       <ul className="space-y-2">
-//         {transactions.map((txn) => (
-//           <li
-//             key={txn._id}
-//             className="border px-4 py-2 rounded bg-white shadow flex justify-between items-center"
-//           >
-//             <div>
-//               <p className="font-medium">₹{txn.amount}</p>
-//               <p className="text-sm text-gray-500">{txn.description}</p>
-//               <p className="text-xs text-gray-400">
-//                 {new Date(txn.date).toLocaleDateString()}
-//               </p>
-//             </div>
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// }
 
 'use client';
 import { useState } from 'react';
@@ -46,7 +13,6 @@ export default function TransactionList({ transactions, setTransactions }) {
       await fetch(`/api/transactions/${id}`, { method: 'DELETE' });
 
       setTransactions((prev) => prev.filter((txn) => txn._id !== id));
-
       toast.error('Transaction deleted');
     } catch (err) {
       toast.error('Failed to delete transaction');
@@ -90,10 +56,12 @@ export default function TransactionList({ transactions, setTransactions }) {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-semibold mb-4 text-gray-800">Recent Transactions</h2>
+      <h2 className="text-xl font-semibold mb-4 text-gray-800">
+        Recent Transactions
+      </h2>
 
       <ul className="space-y-4">
-        {transactions.map((txn) =>
+        {transactions.slice(-3).reverse().map((txn) =>
           editId === txn._id ? (
             <li
               key={txn._id}
@@ -104,7 +72,10 @@ export default function TransactionList({ transactions, setTransactions }) {
                   type="number"
                   value={editData.amount}
                   onChange={(e) =>
-                    setEditData({ ...editData, amount: parseFloat(e.target.value) })
+                    setEditData({
+                      ...editData,
+                      amount: parseFloat(e.target.value),
+                    })
                   }
                   placeholder="Amount"
                   className="w-full border px-3 py-2 rounded"
@@ -123,7 +94,10 @@ export default function TransactionList({ transactions, setTransactions }) {
                   type="text"
                   value={editData.description}
                   onChange={(e) =>
-                    setEditData({ ...editData, description: e.target.value })
+                    setEditData({
+                      ...editData,
+                      description: e.target.value,
+                    })
                   }
                   placeholder="Description"
                   className="w-full border px-3 py-2 rounded"
