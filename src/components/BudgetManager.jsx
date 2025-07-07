@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-export default function BudgetManager({ categories, budgets, setBudgets }) {
+
+export default function BudgetManager({categories, budgets, setBudgets }) {
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
 
@@ -18,6 +19,7 @@ export default function BudgetManager({ categories, budgets, setBudgets }) {
 
   return (
     <div className="bg-white shadow p-4 rounded mt-6">
+      
       <h3 className="font-semibold mb-3">📅 Monthly Budgets</h3>
 
       <div className="flex flex-wrap gap-4 items-end">

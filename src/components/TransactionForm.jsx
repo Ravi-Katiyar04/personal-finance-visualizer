@@ -1,10 +1,9 @@
 
-
 'use client';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-export default function TransactionForm({ onAdd, transactions }) {
+export default function TransactionForm({ onAdd, transactions, setShowForm }) {
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
@@ -14,29 +13,17 @@ export default function TransactionForm({ onAdd, transactions }) {
     e.preventDefault();
 
     const amt = parseFloat(amount);
+    if (!amt || amt <= 0) return toast.error('Enter a valid amount greater than 0');
+    if (!date) return toast.error('Please select a date');
+    if (!description || description.trim().length < 3)
+      return toast.error('Description should be at least 3 characters long');
 
-    // ✅ Validation
-    if (!amt || amt <= 0) {
-      toast.error('Enter a valid amount greater than 0');
-      return;
-    }
-
-    if (!date) {
-      toast.error('Please select a date');
-      return;
-    }
-
-    if (!description || description.trim().length < 3) {
-      toast.error('Description should be at least 3 characters long');
-      return;
-    }
-
-    // ✅ Duplicate check (warn but don't block)
-    const isDuplicate = transactions.some((txn) =>
-      txn.amount === amt &&
-      txn.date.slice(0, 10) === date &&
-      txn.description.trim().toLowerCase() === description.trim().toLowerCase() &&
-      txn.category === category
+    const isDuplicate = transactions.some(
+      (txn) =>
+        txn.amount === amt &&
+        txn.date.slice(0, 10) === date &&
+        txn.description.trim().toLowerCase() === description.trim().toLowerCase() &&
+        txn.category === category
     );
 
     if (isDuplicate) {
@@ -45,7 +32,6 @@ export default function TransactionForm({ onAdd, transactions }) {
       });
     }
 
-    // ✅ Submit transaction
     try {
       const res = await fetch('/api/transactions', {
         method: 'POST',
@@ -59,20 +45,26 @@ export default function TransactionForm({ onAdd, transactions }) {
         description: `₹${newTxn.amount} - ${newTxn.category}`,
       });
 
-      // Reset form
+      // Reset
       setAmount('');
       setDate('');
       setDescription('');
       setCategory('Food');
+
+      // Optional: Close form after submission
+      if (setShowForm) setShowForm(false);
     } catch (err) {
       toast.error('Failed to add transaction. Try again.');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 p-4 bg-white rounded shadow">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4 p-6 bg-white rounded-xl shadow-md border"
+    >
       <div>
-        <label className="block font-medium">Amount</label>
+        <label className="block font-medium text-sm text-gray-700">Amount</label>
         <input
           type="number"
           value={amount}
@@ -83,7 +75,7 @@ export default function TransactionForm({ onAdd, transactions }) {
       </div>
 
       <div>
-        <label className="block font-medium">Date</label>
+        <label className="block font-medium text-sm text-gray-700">Date</label>
         <input
           type="date"
           value={date}
@@ -93,7 +85,7 @@ export default function TransactionForm({ onAdd, transactions }) {
       </div>
 
       <div>
-        <label className="block font-medium">Description</label>
+        <label className="block font-medium text-sm text-gray-700">Description</label>
         <input
           type="text"
           value={description}
@@ -104,7 +96,7 @@ export default function TransactionForm({ onAdd, transactions }) {
       </div>
 
       <div>
-        <label className="block font-medium">Category</label>
+        <label className="block font-medium text-sm text-gray-700">Category</label>
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
@@ -118,13 +110,21 @@ export default function TransactionForm({ onAdd, transactions }) {
         </select>
       </div>
 
-      <button
-        type="submit"
-        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded"
-      >
-        Add Transaction
-      </button>
+      <div className="flex gap-4 justify-end pt-2">
+        <button
+          type="submit"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded"
+        >
+          Add Transaction
+        </button>
+        <button
+          type="button"
+          onClick={() => setShowForm(false)}
+          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded"
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 }
-

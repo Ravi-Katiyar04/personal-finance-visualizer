@@ -1,10 +1,9 @@
 
-
 'use client';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-export default function TransactionList({ transactions, setTransactions }) {
+export default function TransactionList({transactions, setTransactions }) {
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState({});
 
@@ -53,6 +52,7 @@ export default function TransactionList({ transactions, setTransactions }) {
       toast.error('Failed to update transaction');
     }
   };
+
 
   return (
     <div className="p-4">
