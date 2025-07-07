@@ -57,3 +57,4 @@ export default function BudgetManager({categories, budgets, setBudgets }) {
     </div>
   );
 }
+
