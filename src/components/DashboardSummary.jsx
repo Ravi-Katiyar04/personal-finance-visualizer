@@ -37,9 +37,9 @@ export default function DashboardSummary({ transactions }) {
       <Card className="border bg-white shadow-sm">
         <CardHeader>
           <CardTitle className="text-base sm:text-lg font-medium text-gray-800">
-            Set Monthly Income
+            Set Yearly Income
           </CardTitle>
-          <CardDescription>Enter your expected monthly income below</CardDescription>
+          <CardDescription>Enter your expected yearly income below</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-2">
