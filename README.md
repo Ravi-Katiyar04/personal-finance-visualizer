@@ -7,53 +7,45 @@ A Next.js app to track and visualize your personal finances.
 ## 📁 Folder Structure
 
 ```
-personal-finance-visualizer/
-│
-├── .env
-├── package.json
-├── next.config.mjs
-├── postcss.config.mjs
-├── jsconfig.json
-├── eslint.config.mjs
-├── README.md
-│
-├── public/
-│   └── *.svg
-│
-├── src/
-│   ├── app/
-│   │   ├── favicon.ico
-│   │   ├── globals.css
-│   │   ├── layout.js
-│   │   ├── page.js
-│   │   ├── api/
-│   │   │   └── transactions/
-│   │   │       ├── route.js
-│   │   │       └── [id]/
-│   │   │           └── route.js
-│   │   └── table-view/
-│   │       └── page.js
-│   │
-│   ├── components/
-│   │   ├── BudgetBarChart.js
-│   │   ├── BudgetManager.js
-│   │   ├── DashboardSummary.js
-│   │   ├── ExpenseBarChart.js
-│   │   ├── ExpensePieChart.js
-│   │   ├── Layout.js
-│   │   ├── MonthlyBarChart.js
-│   │   ├── SpendingInsights.js
-│   │   ├── TransactionForm.jsx
-│   │   ├── TransactionList.jsx
-│   │   └── ui/
-│   │       └── card.jsx
-│   │
-│   ├── lib/
-│   │   ├── db.js
-│   │   └── utils.js
-│   │
-│   └── models/
-│       └── transaction.js
+src/
+  app/
+    favicon.ico
+    globals.css
+    layout.js
+    page.js
+    analytics/
+      page.js
+    api/
+      transactions/
+        route.js
+        [id]/
+          route.js
+    budget/
+      page.js
+    dashboard/
+      page.js
+  components/
+    BudgetBarChart.jsx
+    BudgetManager.jsx
+    DashboardSummary.jsx
+    ExpenseBarChart.jsx
+    ExpensePieChart.jsx
+    Home.jsx
+    Layout.jsx
+    MonthlyBarChart.jsx
+    Navbar.jsx
+    SpendingInsights.jsx
+    TransactionForm.jsx
+    TransactionList.jsx
+    ui/
+      card.jsx
+  context/
+    TransactionContext.js
+  lib/
+    db.js
+    utils.js
+  models/
+    transaction.js
 ```
 
 ---
@@ -76,7 +68,6 @@ personal-finance-visualizer/
 3. **Configure environment variables:**
 
    Create a `.env` file in the root with:
-
    ```
    MONGODB_URI=your_mongodb_connection_string
    ```
@@ -160,13 +151,16 @@ personal-finance-visualizer/
 ## 🗂️ Main Pages/Routes
 
 - `/`  
-  Dashboard: Add/view transactions, see summary, charts, budgets, and insights.
-
-- `/table-view`  
   Table view: Filter, edit, and delete transactions in a tabular format.
 
-- `/reports`  
-  (Placeholder for future reports page.)
+- `/dashboard`  
+  Dashboard: Add/view transactions, see summary cards.
+
+- `/analytics`  
+  Analytics: Charts for monthly and category-wise expenses.
+
+- `/budget`  
+  Budget: Set budgets, see insights, and compare budget vs. spending.
 
 ---
 
@@ -192,9 +186,8 @@ See [`src/models/transaction.js`](src/models/transaction.js):
 - Tailwind CSS
 - Recharts (for charts)
 - Sonner (for notifications)
+- Lucide React (icons)
 
 ---
 
-## 📄 License
-
-MIT
+## 📄
