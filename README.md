@@ -1,36 +1,200 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Personal Finance Visualizer
 
-## Getting Started
+A Next.js app to track and visualize your personal finances.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📁 Folder Structure
+
+```
+personal-finance-visualizer/
+│
+├── .env
+├── package.json
+├── next.config.mjs
+├── postcss.config.mjs
+├── jsconfig.json
+├── eslint.config.mjs
+├── README.md
+│
+├── public/
+│   └── *.svg
+│
+├── src/
+│   ├── app/
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── layout.js
+│   │   ├── page.js
+│   │   ├── api/
+│   │   │   └── transactions/
+│   │   │       ├── route.js
+│   │   │       └── [id]/
+│   │   │           └── route.js
+│   │   └── table-view/
+│   │       └── page.js
+│   │
+│   ├── components/
+│   │   ├── BudgetBarChart.js
+│   │   ├── BudgetManager.js
+│   │   ├── DashboardSummary.js
+│   │   ├── ExpenseBarChart.js
+│   │   ├── ExpensePieChart.js
+│   │   ├── Layout.js
+│   │   ├── MonthlyBarChart.js
+│   │   ├── SpendingInsights.js
+│   │   ├── TransactionForm.jsx
+│   │   ├── TransactionList.jsx
+│   │   └── ui/
+│   │       └── card.jsx
+│   │
+│   ├── lib/
+│   │   ├── db.js
+│   │   └── utils.js
+│   │
+│   └── models/
+│       └── transaction.js
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🚀 Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Clone the repo:**
+   ```sh
+   git clone <your-repo-url>
+   cd personal-finance-visualizer
+   ```
 
-## Learn More
+2. **Install dependencies:**
+   ```sh
+   npm install
+   # or
+   yarn install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. **Configure environment variables:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   Create a `.env` file in the root with:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```
+   MONGODB_URI=your_mongodb_connection_string
+   ```
 
-## Deploy on Vercel
+4. **Run the development server:**
+   ```sh
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🛣️ API Routes
+
+### `GET /api/transactions`
+
+- **Description:** Get all transactions (sorted by date descending)
+- **Response:**  
+  ```json
+  [
+    {
+      "_id": "string",
+      "amount": 1200,
+      "date": "2024-06-01T00:00:00.000Z",
+      "description": "Grocery shopping",
+      "category": "Food"
+    },
+    ...
+  ]
+  ```
+
+---
+
+### `POST /api/transactions`
+
+- **Description:** Add a new transaction
+- **Body:**  
+  ```json
+  {
+    "amount": 1200,
+    "date": "2024-06-01",
+    "description": "Grocery shopping",
+    "category": "Food"
+  }
+  ```
+- **Response:**  
+  Returns the created transaction object.
+
+---
+
+### `PUT /api/transactions/[id]`
+
+- **Description:** Update a transaction by ID
+- **Body:**  
+  ```json
+  {
+    "amount": 1300,
+    "date": "2024-06-02",
+    "description": "Supermarket",
+    "category": "Food"
+  }
+  ```
+- **Response:**  
+  Returns the updated transaction object.
+
+---
+
+### `DELETE /api/transactions/[id]`
+
+- **Description:** Delete a transaction by ID
+- **Response:**  
+  ```json
+  { "message": "Deleted" }
+  ```
+
+---
+
+## 🗂️ Main Pages/Routes
+
+- `/`  
+  Dashboard: Add/view transactions, see summary, charts, budgets, and insights.
+
+- `/table-view`  
+  Table view: Filter, edit, and delete transactions in a tabular format.
+
+- `/reports`  
+  (Placeholder for future reports page.)
+
+---
+
+## 📝 Transaction Model
+
+See [`src/models/transaction.js`](src/models/transaction.js):
+
+```js
+{
+  amount: Number,
+  date: Date,
+  description: String,
+  category: 'Food' | 'Travel' | 'Rent' | 'Shopping' | 'Other'
+}
+```
+
+---
+
+## 🧑‍💻 Tech Stack
+
+- Next.js (App Router)
+- MongoDB (via Mongoose)
+- Tailwind CSS
+- Recharts (for charts)
+- Sonner (for notifications)
+
+---
+
+## 📄 License
+
+MIT
